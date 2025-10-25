@@ -1,0 +1,192 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #0b1220; /* dark backdrop subtle gradient base (not too dark) */
+}
+
+/* Form primitives */
+.label {
+  @apply block text-sm font-medium text-slate-700 dark:text-slate-200;
+}
+
+.input {
+  @apply w-full rounded-xl border border-slate-200 bg-white/80 px-4 py-2.5 text-sm text-slate-800 shadow-sm ring-1 ring-slate-200 placeholder:text-slate-400
+    focus:outline-none focus:ring-brand-300 focus:border-brand-300 transition
+    dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-100 dark:ring-slate-700 dark:placeholder:text-slate-500;
+}
+
+.input-error {
+  @apply border-rose-400 ring-rose-300 focus:ring-rose-300 focus:border-rose-400;
+}
+
+.hint {
+  @apply mt-1 text-xs text-slate-500 dark:text-slate-400;
+}
+
+.separator {
+  @apply relative my-6 text-center text-xs uppercase tracking-wide text-slate-400 dark:text-slate-500;
+}
+.separator:before,
+.separator:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 40%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(148,163,184,.5));
+}
+.separator:before { left: 0; }
+.separator:after { right: 0; transform: scaleX(-1); }
+
+html, body, #__next {
+  height: 100%;
+}
+
+body {
+  @apply bg-white text-slate-800 antialiased dark:bg-slate-950 dark:text-slate-100;
+}
+
+/* Utilities */
+.app-bg {
+  background-image:
+    radial-gradient(700px 420px at 18% 8%, rgba(138,43,226,0.16), transparent 60%),
+    radial-gradient(820px 520px at 82% 14%, rgba(58,91,255,0.14), transparent 60%),
+    radial-gradient(760px 520px at 65% 88%, rgba(134,226,234,0.14), transparent 60%),
+    radial-gradient(600px 360px at 50% -10%, rgba(138,43,226,0.08), transparent 65%),
+    linear-gradient(to bottom, #ffffff, #f8fafc);
+}
+.dark .app-bg {
+  /* Layer gentle logo-tinted glows + deep dark gradient */
+  background-image:
+    radial-gradient(700px 400px at 50% -5%, rgba(138,43,226,0.18), transparent 60%),
+    radial-gradient(800px 500px at 90% 10%, rgba(134,226,234,0.14), transparent 60%),
+    linear-gradient(to bottom, #0b1220, #020617);
+}
+
+.container-page {
+  @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+}
+
+.section {
+  @apply py-16 md:py-24;
+}
+
+.heading-hero {
+  @apply text-4xl md:text-6xl font-extrabold leading-tight tracking-tight;
+}
+
+.subtle-muted {
+  @apply text-slate-500 dark:text-slate-300;
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center rounded-full text-white px-5 py-3 text-sm font-semibold shadow transition
+    bg-gradient-to-r from-logo-start via-logo-mid to-logo-end hover:brightness-110;
+}
+
+.btn-secondary {
+  @apply inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-semibold transition
+    text-slate-700 ring-1 ring-slate-200 bg-white/60 hover:bg-white
+    dark:text-slate-200 dark:ring-slate-700 dark:bg-transparent dark:hover:bg-slate-800;
+}
+
+.badge {
+  @apply inline-flex items-center gap-2 rounded-full bg-green-50 text-green-700 px-3 py-1 text-xs font-medium ring-1 ring-green-200
+    dark:bg-emerald-900/20 dark:text-emerald-300 dark:ring-emerald-800/30;
+}
+
+.card {
+  @apply rounded-2xl bg-white shadow-card ring-1 ring-slate-100 dark:bg-slate-900 dark:ring-slate-800;
+}
+
+/* Prismal crystalline texture for login right panel */
+.prismal-crystal {
+  background-image: 
+    /* Large angular shapes */
+    polygon(0% 0%, 30% 20%, 15% 45%, 0% 30%),
+    polygon(70% 0%, 100% 0%, 85% 35%, 60% 25%),
+    polygon(20% 60%, 45% 50%, 35% 85%, 10% 75%),
+    polygon(55% 45%, 85% 60%, 75% 90%, 50% 80%),
+    polygon(90% 70%, 100% 100%, 70% 100%, 80% 85%),
+    /* Medium facets */
+    polygon(25% 15%, 45% 10%, 40% 35%, 20% 30%),
+    polygon(60% 20%, 80% 15%, 75% 40%, 55% 35%),
+    polygon(15% 50%, 35% 45%, 30% 70%, 10% 65%),
+    polygon(65% 55%, 85% 50%, 80% 75%, 60% 70%),
+    /* Small crystal fragments */
+    polygon(10% 10%, 20% 8%, 18% 18%, 8% 15%),
+    polygon(85% 30%, 95% 28%, 93% 38%, 83% 35%),
+    polygon(30% 75%, 40% 73%, 38% 83%, 28% 80%),
+    polygon(70% 85%, 80% 83%, 78% 93%, 68% 90%);
+  
+  background-color: 
+    rgba(147, 51, 234, 0.12), /* purple */
+    rgba(59, 130, 246, 0.10),  /* blue */
+    rgba(34, 197, 94, 0.08),   /* green */
+    rgba(147, 51, 234, 0.06),
+    rgba(59, 130, 246, 0.08),
+    rgba(34, 197, 94, 0.10),
+    rgba(147, 51, 234, 0.08),
+    rgba(59, 130, 246, 0.06),
+    rgba(34, 197, 94, 0.12),
+    rgba(147, 51, 234, 0.04),
+    rgba(59, 130, 246, 0.04),
+    rgba(34, 197, 94, 0.04),
+    rgba(147, 51, 234, 0.04);
+}
+
+.dark .prismal-crystal {
+  background-color: 
+    rgba(147, 51, 234, 0.25), /* purple - more intense */
+    rgba(59, 130, 246, 0.20),  /* blue */
+    rgba(34, 197, 94, 0.18),   /* green */
+    rgba(147, 51, 234, 0.15),
+    rgba(59, 130, 246, 0.18),
+    rgba(34, 197, 94, 0.22),
+    rgba(147, 51, 234, 0.18),
+    rgba(59, 130, 246, 0.15),
+    rgba(34, 197, 94, 0.25),
+    rgba(147, 51, 234, 0.10),
+    rgba(59, 130, 246, 0.10),
+    rgba(34, 197, 94, 0.10),
+    rgba(147, 51, 234, 0.10);
+}
+
+/* Decorative texture used on the login page right panel */
+.texture-logo {
+  background-image:
+    radial-gradient(500px 300px at 10% 20%, rgba(138,43,226,0.20), transparent 60%),
+    radial-gradient(600px 350px at 90% 10%, rgba(58,91,255,0.16), transparent 60%),
+    radial-gradient(700px 400px at 70% 80%, rgba(134,226,234,0.18), transparent 65%),
+    repeating-linear-gradient(45deg, rgba(255,255,255,0.03) 0 2px, transparent 2px 6px);
+  filter: saturate(110%);
+}
+.dark .texture-logo {
+  background-image:
+    radial-gradient(500px 300px at 10% 20%, rgba(138,43,226,0.28), transparent 60%),
+    radial-gradient(600px 350px at 90% 10%, rgba(58,91,255,0.22), transparent 60%),
+    radial-gradient(700px 400px at 70% 80%, rgba(134,226,234,0.24), transparent 65%),
+    repeating-linear-gradient(45deg, rgba(255,255,255,0.03) 0 2px, transparent 2px 6px);
+}
+
+/* Glow + tilt animation for login card wrapper */
+@keyframes prismal-tilt {
+  0%   { transform: perspective(800px) rotateX(0deg) rotateY(0deg) translate3d(0,0,0); filter: drop-shadow(0 0 0px rgba(99,102,241,0.25)); }
+  25%  { transform: perspective(800px) rotateX(0.5deg) rotateY(-0.5deg) translate3d(0px, -0.5px, 0); filter: drop-shadow(0 4px 8px rgba(99,102,241,0.25)); }
+  50%  { transform: perspective(800px) rotateX(-0.4deg) rotateY(0.6deg) translate3d(0px, 0.5px, 0); filter: drop-shadow(0 4px 10px rgba(59,130,246,0.22)); }
+  75%  { transform: perspective(800px) rotateX(0.4deg) rotateY(0.4deg) translate3d(0px, -0.3px, 0); filter: drop-shadow(0 6px 12px rgba(34,197,94,0.22)); }
+  100% { transform: perspective(800px) rotateX(0deg) rotateY(0deg) translate3d(0,0,0); filter: drop-shadow(0 0 0px rgba(99,102,241,0.25)); }
+}
+
+.login-glow-tilt {
+  animation: prismal-tilt 9s ease-in-out infinite;
+  will-change: transform, filter;
+  border-radius: 1rem; /* match rounded-2xl */
+}
+
+.dark .login-glow-tilt {
+  animation-duration: 10s;
+  filter: drop-shadow(0 4px 10px rgba(148,163,184,0.12));
+}
