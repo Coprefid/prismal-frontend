@@ -16,12 +16,17 @@ export default function EvaluationDetailPage() {
   const [tab, setTab] = useState<'resumen' | 'ct'>('resumen');
   const [ctVars, setCtVars] = useState<any>(null);
   const [ctView, setCtView] = useState<'chart' | 'table'>('chart');
+  const [docId, setDocId] = useState<string | null>(null);
+  const [docStatus, setDocStatus] = useState<string | null>(null);
+  const [docError, setDocError] = useState<string | null>(null);
 
   useEffect(() => {
     (async () => {
       try {
         const resp = await apiGet(`/api/evaluations/${id}`);
-        setData((resp as any)?.data || null);
+        const d = (resp as any)?.data || null;
+        setData(d);
+        try { setDocId((d as any)?.sources?.ctDocumentId || null); } catch {}
       } catch (e: any) {
         setErr('No fue posible cargar la evaluación.');
       } finally {
@@ -94,22 +99,37 @@ export default function EvaluationDetailPage() {
     return { microPresent: present, microMissing: missing };
   }, [policy, features]);
 
-  // CT helpers - Fallback fetch of CT variables if not present in features
+  // CT helpers - Poll document status until extracted/failed and capture variables
   // Place BEFORE any early return to preserve hook order across renders
   useEffect(() => {
-    (async () => {
+    let timer: any = null;
+    const hasCtInFeatures = !!(features as any)?.ct;
+    async function tick() {
       try {
-        const docId = (data as any)?.sources?.ctDocumentId;
-        const hasCtInFeatures = !!(features as any)?.ct;
-        if (!hasCtInFeatures && docId) {
-          const r = await apiGet(`/api/uploads/${docId}`);
-          const v = (r as any)?.data?.meta?.variables || null;
-          if (v) setCtVars(v);
+        if (!docId || hasCtInFeatures) return;
+        const r = await apiGet(`/api/uploads/${docId}`);
+        const payload: any = (r as any)?.data || {};
+        const status = payload?.status || null;
+        setDocStatus(status);
+        const v = payload?.meta?.variables || null;
+        if (v && !ctVars) setCtVars(v);
+        if (status === 'extracted' || status === 'extract_failed') {
+          if (status === 'extract_failed') {
+            const msg = payload?.meta?.extractError?.message || payload?.meta?.extractError?.code || 'Extracción fallida';
+            setDocError(msg);
+          }
+          return; // stop polling
         }
-      } catch {}
-    })();
-    // We explicitly depend on `data` since features derives from it
-  }, [data, features]);
+        timer = setTimeout(tick, 3000);
+      } catch {
+        timer = setTimeout(tick, 4000);
+      }
+    }
+    if (docId && !hasCtInFeatures) {
+      tick();
+    }
+    return () => { if (timer) clearTimeout(timer); };
+  }, [docId, features, ctVars]);
 
   // Early returns AFTER all hooks are called to keep hook order stable
   if (loading) return <Loader fullScreen label="Cargando evaluación…" />;
@@ -273,6 +293,30 @@ export default function EvaluationDetailPage() {
           className="rounded-full bg-gradient-to-r from-logo-start via-logo-mid to-logo-end px-4 py-2 text-sm font-semibold text-white shadow-card"
         >Enriquecer</button>
       </div>
+
+      {/* Estado de procesamiento de Carpeta Tributaria */}
+      {docId && (
+        <div className="mb-4">
+          {docStatus !== 'extracted' && docStatus !== 'extract_failed' && (
+            <div className="rounded-xl border border-slate-200 bg-white p-3 text-sm text-slate-700 ring-1 ring-slate-200 dark:border-white/10 dark:bg-slate-900 dark:text-slate-200 dark:ring-white/10">
+              <div className="flex items-center gap-2">
+                <svg className="h-4 w-4 animate-spin text-logo-start" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" opacity=".2"/><path d="M22 12a10 10 0 0 1-10 10" stroke="currentColor" strokeWidth="4" fill="none"/></svg>
+                Procesamiento de Carpeta Tributaria en curso…
+              </div>
+            </div>
+          )}
+          {docStatus === 'extracted' && (
+            <div className="rounded-xl border border-emerald-300/40 bg-emerald-50 p-3 text-sm text-emerald-800 ring-1 ring-emerald-300/40 dark:border-emerald-500/20 dark:bg-emerald-900/20 dark:text-emerald-200">
+              Carpeta Tributaria procesada correctamente.
+            </div>
+          )}
+          {docStatus === 'extract_failed' && (
+            <div className="rounded-xl border border-rose-300/40 bg-rose-50 p-3 text-sm text-rose-800 ring-1 ring-rose-300/40 dark:border-rose-500/20 dark:bg-rose-900/20 dark:text-rose-200">
+              No fue posible extraer datos de la Carpeta Tributaria. {docError ? `(${docError})` : ''}
+            </div>
+          )}
+        </div>
+      )}
 
       {(companyName || companyRut) && (
         <div className="mb-4 text-sm text-slate-500 dark:text-slate-400">

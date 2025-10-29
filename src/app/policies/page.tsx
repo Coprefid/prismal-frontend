@@ -341,7 +341,7 @@ export default function PoliciesPage() {
     } as any;
     const res = await apiPut(`/api/company-policy/${companyId}`, payload);
     // Navegar al chat tras guardar correctamente
-    router.push('/chat' as Route);
+    router.push('/products' as Route);
   };
 
   return (
@@ -435,7 +435,7 @@ export default function PoliciesPage() {
               />
               <div className="flex items-center gap-2">
                 <button className="btn-primary" onClick={onSave} disabled={isPlaceholder}>Guardar cambios</button>
-                <button className="btn-secondary" onClick={() => router.push('/chat' as Route)}>Volver a chat</button>
+                <button className="btn-secondary" onClick={() => router.push('/products' as Route)}>Volver a productos</button>
               </div>
             </div>
           )}
@@ -471,7 +471,7 @@ export default function PoliciesPage() {
               )}
               <div className="flex items-center gap-2">
                 <button className="btn-primary disabled:opacity-50" onClick={onSave} disabled={microValidation.over || microValidation.missing.length > 0}>Guardar cambios</button>
-                <button className="btn-secondary" onClick={() => router.push('/chat' as Route)}>Volver a chat</button>
+                <button className="btn-secondary" onClick={() => router.push('/products' as Route)}>Volver a productos</button>
               </div>
             </div>
           )}
@@ -489,7 +489,7 @@ export default function PoliciesPage() {
               />
               <div className="flex items-center gap-2">
                 <button className="btn-primary" onClick={onSave}>Guardar cambios</button>
-                <button className="btn-secondary" onClick={() => router.push('/chat' as Route)}>Volver a chat</button>
+                <button className="btn-secondary" onClick={() => router.push('/products' as Route)}>Volver a productos</button>
               </div>
             </div>
           )}

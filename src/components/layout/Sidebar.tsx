@@ -20,6 +20,7 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
   const isActive = (href: string) => {
     if (!pathname) return false;
     if (href === '/evaluations') return pathname === '/evaluations' || pathname.startsWith('/evaluations/');
+    if (href === '/products') return pathname === '/products' || pathname.startsWith('/products/');
     return pathname === href;
   };
 
@@ -38,7 +39,7 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
         </div>
         <div className="text-xs uppercase tracking-wide text-slate-400 px-1">Navegación</div>
         <nav className="mt-2 space-y-1 overflow-auto pr-1">
-          <Link className={`block rounded-xl px-3 py-2 ${isActive('/chat') ? 'bg-gradient-to-r from-logo-start/10 to-logo-end/10 text-slate-800 dark:text-slate-200' : 'hover:bg-slate-100 dark:hover:bg-slate-800'}`} href="/chat">Chat</Link>
+          <Link className={`block rounded-xl px-3 py-2 ${isActive('/products') ? 'bg-gradient-to-r from-logo-start/10 to-logo-end/10 text-slate-800 dark:text-slate-200' : 'hover:bg-slate-100 dark:hover:bg-slate-800'}`} href="/products">Productos</Link>
           <a className={`block rounded-xl px-3 py-2 ${isActive('/clients') ? 'bg-gradient-to-r from-logo-start/10 to-logo-end/10 text-slate-800 dark:text-slate-200' : 'hover:bg-slate-100 dark:hover:bg-slate-800'}`} href="#">Clientes</a>
           <Link className={`block rounded-xl px-3 py-2 ${isActive('/evaluations') ? 'bg-gradient-to-r from-logo-start/10 to-logo-end/10 text-slate-800 dark:text-slate-200' : 'hover:bg-slate-100 dark:hover:bg-slate-800'}`} href="/evaluations">Evaluaciones</Link>
           <a className={`block rounded-xl px-3 py-2 ${isActive('/notifications') ? 'bg-gradient-to-r from-logo-start/10 to-logo-end/10 text-slate-800 dark:text-slate-200' : 'hover:bg-slate-100 dark:hover:bg-slate-800'}`} href="#">Notificaciones</a>

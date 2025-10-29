@@ -31,14 +31,14 @@ export default function LoginPage() {
   const [loginMsg, setLoginMsg] = useState<string | null>(null);
   const [registerOpen, setRegisterOpen] = useState(false);
 
-  // If already authenticated, redirect to chat
+  // If already authenticated, redirect to products
   useEffect(() => {
     (async () => {
       try {
         const token = typeof window !== 'undefined' ? localStorage.getItem('prismal_token') : null;
         if (!token) return;
         const me = await apiGet<{ ok: boolean }>('/api/auth/me');
-        if (me?.ok) router.push('/chat' as Route);
+        if (me?.ok) router.push('/products' as Route);
       } catch {
         // ignore
       }
@@ -135,7 +135,7 @@ export default function LoginPage() {
 
               <button
                 className="mb-3 flex w-full items-center justify-center gap-3 rounded-full border border-slate-200 bg-white/80 px-5 py-3 text-sm font-semibold text-slate-800 shadow-sm ring-1 ring-slate-200 hover:bg-white hover:shadow transition dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-200 dark:ring-slate-700 dark:hover:bg-slate-900"
-                onClick={() => (window.location.href = '/chat')}
+                onClick={() => (window.location.href = '/products')}
               >
                 <svg viewBox="0 0 48 48" className="h-4 w-4" xmlns="http://www.w3.org/2000/svg">
                   <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.9 32.4 29.4 36 24 36 16.8 36 11 30.2 11 23S16.8 10 24 10c3.5 0 6.7 1.3 9.1 3.5l5.7-5.7C35.4 4 29.9 2 24 2 11.8 2 2 11.8 2 24s9.8 22 22 22c12.2 0 22-9.8 22-22 0-1.3-.1-2.5-.4-3.5z"/>
@@ -186,10 +186,10 @@ export default function LoginPage() {
                         if (prof?.ok && prof.data?.isFirstLogin) {
                           router.push('/onboarding' as Route);
                         } else {
-                          router.push('/chat' as Route);
+                          router.push('/products' as Route);
                         }
                       } catch {
-                        router.push('/chat' as Route);
+                        router.push('/products' as Route);
                       }
                     } catch (err: any) {
                       setLoginMsg(err?.message || 'Credenciales inválidas');

@@ -47,10 +47,10 @@ export default function OnboardingPage() {
         },
       };
       await apiPatch('/api/auth/me', payload);
-      // Para evitar rebotes en chat mientras no usamos companies, fija un placeholder
+      // Para evitar rebotes mientras no usamos companies, fija un placeholder
       if (typeof window !== 'undefined') localStorage.setItem('currentCompanyId', 'placeholder');
       setStep('done');
-      setTimeout(() => router.push('/chat' as Route), 600);
+      setTimeout(() => router.push('/products' as Route), 600);
       return;
     } catch (e: any) {
       // Fallback: si no pudimos crear, revisar si ya existe alguna empresa del usuario
@@ -62,7 +62,7 @@ export default function OnboardingPage() {
           setCompanyId(id);
           if (typeof window !== 'undefined') localStorage.setItem('currentCompanyId', id);
           setStep('done');
-          setTimeout(() => router.push('/chat' as Route), 600);
+          setTimeout(() => router.push('/products' as Route), 600);
           return;
         }
       } catch {}
@@ -70,7 +70,7 @@ export default function OnboardingPage() {
       try {
         if (typeof window !== 'undefined') localStorage.setItem('currentCompanyId', 'placeholder');
         setStep('done');
-        setTimeout(() => router.push('/chat' as Route), 600);
+        setTimeout(() => router.push('/products' as Route), 600);
         return;
       } catch {}
       setErrMsg(e?.message || 'No pudimos crear la empresa. Intenta nuevamente.');
@@ -163,7 +163,7 @@ export default function OnboardingPage() {
           {step === 'done' && (
             <div className="card p-6 text-center">
               <div className="text-lg font-semibold">¡Listo! Tu perfil quedó guardado.</div>
-              <div className="hint">Te llevaremos al chat…</div>
+              <div className="hint">Te llevaremos a Productos…</div>
             </div>
           )}
         </div>
