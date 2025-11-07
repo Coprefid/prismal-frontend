@@ -20,10 +20,16 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es">
-      <body className={`${inter.className} app-bg`}>
+      <body className={`${inter.className}`}>
         <ThemeInit />
         <HideNextDevtools />
-        {children}
+        {/* Global animated nebula background (behind all content but above body bg) */}
+        <div className="pointer-events-none fixed inset-0 z-0">
+          <div className="nebula-overlay" />
+        </div>
+        <div className="relative z-10">
+          {children}
+        </div>
       </body>
     </html>
   );

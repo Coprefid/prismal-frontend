@@ -8,9 +8,9 @@ export default function Navbar() {
     <div className="fixed inset-x-0 top-6 z-50 flex justify-center px-4">
       <nav className="w-full max-w-6xl rounded-full border border-slate-200 bg-white/80 px-4 py-2 shadow-card backdrop-blur-xl dark:border-slate-800 dark:bg-slate-900/70">
         <div className="flex h-12 items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 font-semibold text-slate-800 dark:text-slate-100">
+          <Link href="/" className="flex items-center gap-2 font-semibold">
             <Image src="/isotipo.png" alt="Prismal AI" width={24} height={24} className="h-6 w-6" />
-            <span>Prismal AI</span>
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-cyan-600 dark:from-purple-400 dark:to-cyan-400">Prismal AI</span>
           </Link>
           <div className="flex items-center gap-4">
             <nav className="hidden md:flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
